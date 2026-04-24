@@ -5,6 +5,7 @@ import com.telusko.EcomProject.model.Product;
 import com.telusko.EcomProject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,5 +53,15 @@ public class ProductController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/product/image/{id}")
+    public  ResponseEntity<byte []>getImageByProductId(@PathVariable Integer id){
+        Product prod=productService.getProductById(id);
+        byte[] imageFile=prod.getImageData();
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.valueOf(prod.getImageType()))
+                .body(imageFile);
     }
 }
