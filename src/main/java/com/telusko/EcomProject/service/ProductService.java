@@ -29,4 +29,13 @@ public class ProductService {
         p.setImageData(img.getBytes());
         return productRepo.save(p);
     }
+    public Product updateProduct(int id,Product p,MultipartFile f) throws IOException{
+        p.setImageData(f.getBytes());
+        p.setImageName(f.getOriginalFilename());
+        p.setImageType(f.getContentType());
+        return  productRepo.save(p);
+    }
+    public void deleteById(int id){
+        productRepo.deleteById(id);
+    }
 }
