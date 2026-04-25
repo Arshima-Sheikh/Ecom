@@ -93,4 +93,10 @@ public class ProductController {
         }
         return new ResponseEntity<>("product does not exists",HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("/product/search")
+    public  ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword){
+        List<Product>prod=productService.searchProducts(keyword);
+        return new ResponseEntity<>(prod,HttpStatus.OK);
+    }
 }
